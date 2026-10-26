@@ -1,0 +1,216 @@
+{
+  "name": "Smart University Management – Assignment Reminder",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f3981ac8-e991-4ebd-b657-16a4c5e05708",
+              "name": "student_name",
+              "value": "Anu",
+              "type": "string"
+            },
+            {
+              "id": "16d71a45-0d97-4a7d-8247-6029ba7bf15b",
+              "name": "student_id",
+              "value": "STU001",
+              "type": "string"
+            },
+            {
+              "id": "f8ae60c4-5180-4125-abdc-3ee1f8b98c72",
+              "name": "course",
+              "value": "Electronics and Communication",
+              "type": "string"
+            },
+            {
+              "id": "c0eca3ea-d78b-45e4-b72e-ac4a0c82775b",
+              "name": "assignment",
+              "value": "IoT Assignment 1",
+              "type": "string"
+            },
+            {
+              "id": "7a2b2d28-36b4-4481-8c8a-70d89de5ef36",
+              "name": "due_date",
+              "value": "2026-11-01",
+              "type": "string"
+            },
+            {
+              "id": "b4d484b6-42be-4410-999c-5234a09eba0c",
+              "name": "status",
+              "value": "Pending",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "e8f5cb1d-1da5-4ffa-8c54-804713ab80c8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "199ece90-3e38-4608-8ee8-ede4a0fa289e",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        -16,
+        0
+      ],
+      "id": "ec8a49b2-724b-49a0-b76e-01250c197a28",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4a414a3b-c882-4b2f-92b3-cb32827a70fb",
+              "name": "reminder_message",
+              "value": "Reminder: Your IoT Assignment 1 is due on 2026-11-01. Please submit it on time!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        208,
+        -96
+      ],
+      "id": "a97a9671-bcc8-47a9-b3c8-84d3ad052a08",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "chatId": "8383760359",
+        "text": "={{ $json.reminder_message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        -96
+      ],
+      "id": "56d217f6-dcc3-4b77-870f-156be7573829",
+      "name": "Send a text message",
+      "webhookId": "68fc8714-38fa-4704-b3ec-af58a53620eb",
+      "credentials": {
+        "telegramApi": {
+          "id": "4C96LzFbpn6EGmuz",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -464,
+        0
+      ],
+      "id": "44da0bdc-f7ae-4e88-bdc7-03b4fde4d7ad",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "be57f830-a59a-4e26-9270-a23e7c803f98",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c2bdba46039e9c685dc0ab0f2924a75baa196c69f6a5cf89a052ee46f8edb257"
+  },
+  "nodeGroups": [],
+  "id": "Mk8wA8a31DSDRJ8D",
+  "tags": []
+}

@@ -1,0 +1,167 @@
+{
+  "name": "Smart University – Weekly Progress Report",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3b788450-3504-4923-8f33-776609e96fb2",
+              "name": "student_name",
+              "value": "Anu",
+              "type": "string"
+            },
+            {
+              "id": "96e3dc02-06e9-4f2f-b7d9-2274e3928caa",
+              "name": "week",
+              "value": "Oct 19–25, 2026",
+              "type": "string"
+            },
+            {
+              "id": "82d01137-7ea5-4370-a067-764eff9b133d",
+              "name": "assignments_completed",
+              "value": 4,
+              "type": "number"
+            },
+            {
+              "id": "cdd020eb-0fb7-4329-893e-8de7b0dfef67",
+              "name": "assignments_pending",
+              "value": 2,
+              "type": "number"
+            },
+            {
+              "id": "bb394786-8048-4b37-8ada-0e5c49d6c595",
+              "name": "overall_progress",
+              "value": "Good progress",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -32,
+        -32
+      ],
+      "id": "f7104e37-a51a-497d-891b-6d5f86178f0c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fab8b92c-8d1e-409e-b3a3-fde96612cc83",
+              "name": "progress_report",
+              "value": "=WEEKLY STUDENT PROGRESS REPORT  Student: {{ $json.student_name }} Week: {{ $json.week }}  Assignments Completed: {{ $json.assignments_completed }} Assignments Pending: {{ $json.assignments_pending }} Attendance: {{ $json.attendance }}  Overall Progress: {{ $json.overall_progress }}  Keep up the good work and complete your pending assignments!",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        192,
+        -32
+      ],
+      "id": "405bd479-fa40-4447-9c2c-0996e01ebb9e",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "chatId": "8383760359",
+        "text": "={{ $json.progress_report }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        -32
+      ],
+      "id": "a51e04d9-a0a7-4ad8-9a16-09b32955e66b",
+      "name": "Send a text message",
+      "webhookId": "44a104d8-21fa-4126-b92d-5ae1b5d07d47",
+      "credentials": {
+        "telegramApi": {
+          "id": "4C96LzFbpn6EGmuz",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -272,
+        -32
+      ],
+      "id": "ca138774-954a-417b-bedd-f2d73f39123c",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f5dd638b-86cc-4c37-bcbd-8130c8f28569",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c2bdba46039e9c685dc0ab0f2924a75baa196c69f6a5cf89a052ee46f8edb257"
+  },
+  "nodeGroups": [],
+  "id": "0VawnGp1cTknlKTU",
+  "tags": []
+}

@@ -1,0 +1,192 @@
+{
+  "name": "Smart University – Student Records",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -64
+      ],
+      "id": "6dea363a-216e-4c87-b8c6-a692af00990c",
+      "name": "manualtrigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cb834433-2130-4945-8bbd-f6792c38885d",
+              "name": "student_name",
+              "value": "Anu",
+              "type": "string"
+            },
+            {
+              "id": "d1bb891f-d139-41bb-89fb-1dc5225bb756",
+              "name": "student_id",
+              "value": "STU001",
+              "type": "string"
+            },
+            {
+              "id": "3466c696-ac5b-4a24-a13b-ac914ac14811",
+              "name": "department",
+              "value": "ECE",
+              "type": "string"
+            },
+            {
+              "id": "1f9447f0-aaf4-4e82-8e73-4a18bed5b087",
+              "name": "semester",
+              "value": 5,
+              "type": "number"
+            },
+            {
+              "id": "3a9c3000-b505-4724-941c-ffea8915e155",
+              "name": "email",
+              "value": "anu@example.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -208,
+        -64
+      ],
+      "id": "0f16361f-ce23-494a-9fca-a7a9cf58c430",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1-pZenkUsT_MkDIN_3R5HLSpkyD3Yl69P5WUiFfGmzXw/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-pZenkUsT_MkDIN_3R5HLSpkyD3Yl69P5WUiFfGmzXw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "student_name",
+              "displayName": "student_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "student_id",
+              "displayName": "student_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "department",
+              "displayName": "department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "semester",
+              "displayName": "semester",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        16,
+        -64
+      ],
+      "id": "fc3626a5-3a04-4eb6-a634-b359ed627a10",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hUmxviGtVz8eJ2Jk",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "manualtrigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b11404ea-f855-4d86-87c0-0b37d1dd2b8f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c2bdba46039e9c685dc0ab0f2924a75baa196c69f6a5cf89a052ee46f8edb257"
+  },
+  "nodeGroups": [],
+  "id": "gbpWz4itCVgiqtcO",
+  "tags": []
+}

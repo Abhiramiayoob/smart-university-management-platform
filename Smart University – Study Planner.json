@@ -1,0 +1,158 @@
+{
+  "name": "Smart University – Study Planner",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        -48
+      ],
+      "id": "b296feb0-cf3f-4ad1-9bc4-de39aa21faed",
+      "name": "manualtrigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "498c1fbc-1c56-4f16-963a-9e3aa0e3bdd4",
+              "name": "student_name",
+              "value": "Anu",
+              "type": "string"
+            },
+            {
+              "id": "20bb032b-d9e2-4d10-b929-e8c514e53add",
+              "name": "subjects",
+              "value": "Signals and Systems, IoT, Digital Electronics",
+              "type": "string"
+            },
+            {
+              "id": "2dbae1a2-7a33-4a5c-9e63-1aab323bfe87",
+              "name": "available_hours",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "ac80c689-d4f6-4476-bd47-0d66ba810868",
+              "name": "priority",
+              "value": "High",
+              "type": "string"
+            },
+            {
+              "id": "b8ae5565-c88c-47e5-bcc9-9cfce83353c7",
+              "name": "study_date",
+              "value": "2026-10-26",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -240,
+        -48
+      ],
+      "id": "e6096ed3-80d3-4de4-ba8c-c40475451940",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0c7fd40d-0b12-4cc9-941e-fa5ce976d9a4",
+              "name": "study_plan",
+              "value": "9:00–10:00 AM — Signals and Systems 10:00–11:00 AM — IoT 11:00 AM–12:00 PM — Digital Electronics  Take short breaks between subjects. Start with the highest-priority topics.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "527d2912-2ccc-44f2-88d7-cf1d0bbc7c18",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "chatId": "8383760359",
+        "text": "=📚 Your Study Plan  Student: {{ $json.student_name }}  Today's Schedule: {{ $json.study_plan }}  Priority: High  Good luck with your studies!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        -48
+      ],
+      "id": "0c79578a-58cc-477b-86c6-626b402d3511",
+      "name": "Send a text message",
+      "webhookId": "86a59d64-3758-47fa-be45-753befb3aeb9",
+      "credentials": {
+        "telegramApi": {
+          "id": "4C96LzFbpn6EGmuz",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "manualtrigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ec878dae-30ab-4063-afa2-290efb8c22db",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c2bdba46039e9c685dc0ab0f2924a75baa196c69f6a5cf89a052ee46f8edb257"
+  },
+  "nodeGroups": [],
+  "id": "PvZg5InUAegoJYox",
+  "tags": []
+}

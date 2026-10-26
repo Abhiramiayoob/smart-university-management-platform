@@ -1,0 +1,160 @@
+{
+  "name": "Smart University – Deadline Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -448,
+        -64
+      ],
+      "id": "bc45bf1e-cad6-4f1d-89f4-2f4350906a57",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1DZxOF9mhov7bnwK-M6or0pgbGwpWE3WB2FOSZ0M-7WE/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DZxOF9mhov7bnwK-M6or0pgbGwpWE3WB2FOSZ0M-7WE/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        -64
+      ],
+      "id": "af37d47a-a89e-4a31-849c-dd537d2fd584",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "hUmxviGtVz8eJ2Jk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "ad306a02-a73d-4453-b5cf-996096674030",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        0,
+        -64
+      ],
+      "id": "0385d1de-f6bb-4422-99ef-5e90ca520440",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "8383760359",
+        "text": "=📚 Assignment Deadline Tracker  Student: {{ $json.student_name }} Assignment: {{ $json.assignment }} Due date: {{ $json.due_date }} Status: {{ $json.status }}  Please complete and submit your assignment on time!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        -160
+      ],
+      "id": "e9f88bad-e1ed-4194-9514-b4e01deb4bac",
+      "name": "Send a text message",
+      "webhookId": "3a0c5bbf-41e1-4293-9aa8-ff8dae34251f",
+      "credentials": {
+        "telegramApi": {
+          "id": "4C96LzFbpn6EGmuz",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3a704c07-2cf5-4f0f-99a2-4f6374b18c7d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c2bdba46039e9c685dc0ab0f2924a75baa196c69f6a5cf89a052ee46f8edb257"
+  },
+  "nodeGroups": [],
+  "id": "PcL943OiQF8XK4VT",
+  "tags": []
+}
